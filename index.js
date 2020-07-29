@@ -34,7 +34,7 @@ function getParks(stateString, maxResults) {
       });
   }
 
-function templateParkHtml(parkUrl, parkName, description, address1, address2, city, postalCode){
+function templateParkHtml(parkUrl, parkName, description, address1, address2, city, postalCode, state){
 
     return `<li class="parks">
     <h3><a href="${parkUrl}">${parkName}</a></h3>
@@ -43,6 +43,7 @@ function templateParkHtml(parkUrl, parkName, description, address1, address2, ci
     <p class="address">${address2}</p>
     <p class="address">${city}</p>
     <p class="address">${postalCode}</p>
+    <p class="address">${state}</p>
     </li>
     
     <br>`
@@ -65,7 +66,8 @@ function loopPark(parkObject) {
         currentPark.addresses[0].line1, 
         currentPark.addresses[0].line2, 
         currentPark.addresses[0].city, 
-        currentPark.addresses[0].postalCode);
+        currentPark.addresses[0].postalCode,
+        currentPark.addresses[0].stateCode);
 
         $('#result-list').append(html);
 
