@@ -9,15 +9,14 @@ function formatQueryParams(params) {
 
 }
 
-function getParks(query, maxResults) {
+function getParks(stateString, maxResults) {
     const params = {
-      key: apiKey,
-      q: query,
-      stateCode: states,
+      api_key: apiKey,
+      stateCode: stateString,
       limit: maxResults,
     };
     const queryString = formatQueryParams(params)
-    const url = getURL + '?' + queryString;
+    const url = getUrl + '?' + queryString;
   
     console.log(url);
   
@@ -28,59 +27,69 @@ function getParks(query, maxResults) {
         }
         throw new Error(response.statusText);
       })
-      .then(responseJson => displayResults(responseJson))
-      .catch(err => {
-        $('.result-title').empty();
-        $('.result-title').text(`Something went wrong: ${err.message}`);
+      .then(responseJson => displayParks(responseJson))
+      .catch(error => {
+        $('.result-title').removeClass('hidden');
+        $('.result-title').text(`Something went wrong: ${error.message}`);
       });
   }
 
 function templateParkHtml(parkUrl, parkName, description, address1, address2, city, postalCode){
 
     return `<li class="parks">
-    <a href="${parkUrl}">${parkName}</a>
+    <h3><a href="${parkUrl}">${parkName}</a></h3>
     <p>${description}</p>
-    <p>${address1}</p>
-    <p>${address2}</p>
-    <p>${city}</p>
-    <p>${postalCode}</p>
-    </li>`
+    <p class="address">${address1}</p>
+    <p class="address">${address2}</p>
+    <p class="address">${city}</p>
+    <p class="address">${postalCode}</p>
+    </li>
+    
+    <br>`
 
 }
 
-function loopPark(parkArray) {
+function loopPark(parkObject) {
+
     $('#result-list').empty();
-    for (let i = 0; i < parkArray.length; i++) {
-        $('#result-list').append(templateParkHtml(
-            parkArray[i].data.url, 
-            parkArray[i].data.fullName, 
-            parkArray[i].data.description, 
-            parkArray[i].data.addresses[0].line1, 
-            parkArray[i].data.addresses[0].line2, 
-            parkArray[i].data.addresses[0].city, 
-            parkArray[i].data.addresses[0].postalCode));
+    console.log(parkObject)
+
+    for (let i = 0; i < parkObject.data.length; i++) {
+
+      const currentPark = parkObject.data[i];
+
+      const html = templateParkHtml(
+        currentPark.url, 
+        currentPark.fullName, 
+        currentPark.description, 
+        currentPark.addresses[0].line1, 
+        currentPark.addresses[0].line2, 
+        currentPark.addresses[0].city, 
+        currentPark.addresses[0].postalCode);
+
+        $('#result-list').append(html);
+
     };
-    $('.result-title').removeClass('hidden');
     $('.results').removeClass('hidden');
+
 }
 
-function displayParks(responseJson, parkID) {
-    /* Log the JSON array from the response */
-    console.log(responseJson);
-    console.log(parkID);
-    /* Set array as local variable */
-    parkArray = responseJson;
 
-    loopPark(parkArray, parkID);
+function displayParks(responseJson) {
+    /* Set array as local variable */
+    const parkObject = responseJson;
+    console.log(parkObject);
+    loopPark(parkObject);
 }
 
 function formEvent() {
 
     $('form').on('submit', function(event){
         event.preventDefault();
-        let parkID = $('#js-search').val();
-        console.log(parkID);
-        getParks(gitURL, parkID);
+        const stateString = $('#js-search').val();
+        const maxResults = $('#js-max-results').val();
+        console.log(stateString, maxResults);
+        getParks(stateString, maxResults);
     });
 
 }

@@ -17,10 +17,33 @@ ul {
 
 }
 
+section h2 {
+
+    padding-left: 0.7em;
+
+}
+
+.top {
+
+    background-color: wheat;
+    margin: 1em;
+    padding: 1em;
+
+}
+
+.address {
+
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+
+}
+
 .results {
 
     display: flex;
     flex-direction: column;
+    text-align: left;
 
 }
 

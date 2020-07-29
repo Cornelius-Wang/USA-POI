@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Parks App</title>
+    <title>USA Points of Interest App</title>
     <link href="main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="container">
-        <h1>List of National Parks</h1>
 
-        <form id="js-form">
-            <label for="user state">State</label>
-            <input type="text" name="user state" id="js-search" required>
-            
-            <label for="max-results">Maximum results to return</label>
-            <input type="number" name="max-results" id="js-max-results" value="10">
+        <div class="top">
+            <h1>List of National Parks & Monuments Sorted by State</h1>
 
-            <input type="submit" value="Search">
-        </form>
-        <div class="result-title hidden">
-            <h2>Parks Nearby:</h2>
+            <form id="js-form">
+                <label for="user state">States (seperate with commas)</label>
+                <input type="text" name="user state" id="js-search" placeholder="CA, TX, AZ..." required>
+                
+                <label for="max-results">Maximum results to return</label>
+                <input type="number" name="max-results" id="js-max-results" max="50" value="10">
+
+                <input type="submit" value="Search">
+            </form>
         </div>
+
         <section id="js-results" class="results hidden">
-            <ul id="result-list"></ul>
+
+            <h2>Points of Interest:</h2>
+        
+            <ul id="result-list" class="result-list"></ul>
         </section>
+        
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="index.js"></script>
