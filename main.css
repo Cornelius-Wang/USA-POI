@@ -1,0 +1,31 @@
+body {
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+form {
+    display: inline-block;
+}
+
+ul {
+
+    padding: 1em;
+    list-style-type: none;
+
+}
+
+.results {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.hidden {
+
+    display: none;
+
+}
